@@ -7,7 +7,7 @@ const postReducer = (prevState = initalState, action) => {
         data: [...prevState, action.data]
       }
     default: {
-      return preState;
+      return prevState;
     }
   }
 }
