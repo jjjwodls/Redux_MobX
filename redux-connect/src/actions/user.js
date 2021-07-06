@@ -1,5 +1,6 @@
 const logIn = (data) => { //async action creator (비동기 이므로 함수를 리턴)
   return (dispatch, getState) => {
+    
     dispatch(loginRequest(data));
     try {
       setTimeout(() => {
@@ -16,15 +17,18 @@ const logIn = (data) => { //async action creator (비동기 이므로 함수를 
 }
 
 const loginRequest = (data) => {
+  
   return {
     type: 'LOG_IN_REQUEST',
     data
   }
 }
 
-const loginSuccess = () => {
+const loginSuccess = (data) => {
+  
   return {
-    type: 'LOG_IN_SUCCESS'
+    type: 'LOG_IN_SUCCESS',
+    data
   }
 }
 

@@ -5,7 +5,7 @@ const { logIn, logOut } = require('./actions/user');
 
 const initalState = {
   user: {
-    isLogginIn: true,
+    isLogginIn: false,
     data: null
   },
   posts: [], // 덩치가 커질만한 것들 + 배열이 같은것은 밖으로 빼주는게 좋다.
@@ -48,39 +48,25 @@ const thunkMiddleWare = (store) => (dispatch) => (action) => {
   return dispatch(action);
 }
 
-const enhancer = applyMiddleware(
+
+const enhancer = compose(applyMiddleware(
   firstMiddleWare,
   thunkMiddleWare
+  ),
+  typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
 );
 
 const store = createStore(reducer, initalState, enhancer);
 
-// store.subscribe(() => {
-//   console.log("change render"); //react-redux에 기본으로 들어있다. 실제 잘 사용 안함.
-// });
-console.log('1', store.getState());
-store.dispatch(logIn(
-  {
-    id: 1,
-    name: 'jaess',
-    admin: true
-  }
-))
+// console.log('1', store.getState());
 // store.dispatch(logIn(
-//   "jaess2"
+//   {
+//     id: 1,
+//     name: 'jaess',
+//     admin: true
+//   }
 // ))
 
-// console.log('2', store.getState());
+module.exports = store;
 
-// store.dispatch(
-//   addPost(["포스트 추가","post2"])
-// );
-
-// console.log('3', store.getState());
-
-// store.dispatch(
-//   logOut()
-// );
-
-// console.log('4(포스트 정보만 보자)', store.getState().posts);
 
