@@ -1,4 +1,5 @@
-const produce = require('immer');
+//immer를 적용하여 기존 prevState를 계속 유지하는 spread문법을 제거.
+const { produce } = require('immer');
 
 const initalState = {
   isLogginIn: false,

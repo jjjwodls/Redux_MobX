@@ -1,5 +1,5 @@
 const initalState = [];
-const produce = require('immer');
+const { produce } = require('immer');
 
 const postReducer = (prevState = initalState, action) => {
   return produce(prevState, (draft) => {
