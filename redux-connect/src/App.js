@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { logIn, logOut } from './actions/user';
 
+const userSlice = require('./reducers/user');
+
 function App() {
 
   const user = useSelector((state) => state.user); //state는 initailState
@@ -16,12 +18,12 @@ function App() {
   }, []);
 
   const onLogout = useCallback(() => {
-    dispatch(logOut());
+    dispatch(userSlice.actions.logOut()); //toolkit이 알아서 logout action을 생성해준다.
   }, []);
 
   return (
     <div>
-      {user.isLogginIn ? <div>로그인중</div> : user.data ? <div>{user.data.nickName}</div> : '로그인 해주세요.'}
+      {user.isLogginIn ? <div>로그인중</div> : user.data ? <div>{user.data.nickname}</div> : '로그인 해주세요.'}
       {!user.data ? <button onClick={onClick}>로그인</button> 
       : <button onClick={onLogout}>로그아웃</button>}
     </div>
