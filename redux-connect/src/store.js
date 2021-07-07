@@ -1,7 +1,6 @@
 const { createStore, applyMiddleware, compose } = require("redux");
 const reducer = require('./reducers');
-const { addPost } = require('./actions/post');
-const { logIn, logOut } = require('./actions/user');
+const { composeWithDevTools } = require('redux-devtools-extension');
 
 const initalState = {
   user: {
@@ -49,11 +48,11 @@ const thunkMiddleWare = (store) => (dispatch) => (action) => {
 }
 
 
-const enhancer = compose(applyMiddleware(
+const enhancer = composeWithDevTools(applyMiddleware(
   firstMiddleWare,
   thunkMiddleWare
   ),
-  typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
+  // typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
 );
 
 const store = createStore(reducer, initalState, enhancer);
