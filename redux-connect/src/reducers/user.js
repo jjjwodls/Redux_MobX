@@ -1,41 +1,39 @@
+const produce = require('immer');
+
 const initalState = {
   isLogginIn: false,
   data: null
 }
 
+//nextState = produce(preState, (draft) => {})
+
 const userReducer = (prevState = initalState, action) => {
-  switch (action.type) {
-    case 'LOG_IN_REQUEST':
-      return {
-        ...prevState,
-        isLogginIn : true
-      };
-    case 'LOG_IN_SUCCESS':
-      return {
-        ...prevState,
-        data: action.data,
-        isLogginIn : false
-      };
-    case 'LOG_IN_FAILURE':
-      return {
-        ...prevState,
-        data: null,
-        isLogginIn : false
-      };
-    case 'LOG_IN':
-      return {
-        ...prevState,
-        data: action.data
-      };
-    case 'LOG_OUT':
-      return {
-        ...prevState,
-        data: null
-      };
-    default: {
-      return prevState;
+  return produce(prevState,(draft) => {
+    switch (action.type) {
+      case 'LOG_IN_REQUEST':
+        draft.data = null;
+        draft.isLogginIn = true;
+        break;
+      case 'LOG_IN_SUCCESS':
+        draft.data = action.data;
+        draft.isLogginIn = false;
+        break;
+      case 'LOG_IN_FAILURE':
+        draft.data = null;
+        draft.isLogginIn = false;
+        break;
+      case 'LOG_IN':
+        draft.isLogginIn = true;
+        draft.data = action.data;
+        break;
+      case 'LOG_OUT':
+        draft.data = null;
+        break;
+      default: {
+        break;
+      }
     }
-  }
+  })
 }
 
 module.exports = userReducer;
